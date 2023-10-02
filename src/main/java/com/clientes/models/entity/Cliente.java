@@ -6,7 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data @Entity @Table
+@Data @Entity @Table(name = "clientes")
 public class Cliente implements Serializable {
 
     @Id
@@ -19,7 +19,7 @@ public class Cliente implements Serializable {
 
     private String email;
 
-    @Column(name = "create_at")
+    @Column(name = "create_At")
     @Temporal(TemporalType.DATE)
     private Date createAt;
 

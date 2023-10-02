@@ -1,0 +1,15 @@
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('David', 'Saldivar', '2023-01-01', 'Davids.berz@gmail.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Valeria', 'Perez', '2022-08-14', 'valeria.p@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Carlos', 'García', '2023-05-20', 'c.garcia@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Mateo', 'Gomez', '2023-01-25', 'mateo.g@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Isabella', 'Lopez', '2022-12-10', 'isabella.l@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Daniel', 'Torres', '2023-04-03', 'daniel.t@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Sophia', 'Martinez', '2022-11-15', 'sophia.m@gmail.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Javier', 'Hernández', '2023-03-17', 'javier.h@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Alejandro', 'Ramírez', '2023-02-28', 'ale.ramirez@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Gabriela', 'Diaz', '2022-10-05', 'gabriela.d@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Lucia', 'Vega', '2022-11-30', 'lucia.v@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Laura', 'Fernández', '2022-09-08', 'laura.fern@gmail.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Sofia', 'Rojas', '2022-07-19', 'sofia.r@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Diego', 'Santos', '2023-06-22', 'diego.s@email.com');
+INSERT INTO clientes (nombre, apellido, create_At, email) VALUES ('Eduardo', 'Mendoza', '2023-08-12', 'eduardo.m@email.com');
