@@ -6,9 +6,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
-@Entity
-@Table
+@Data @Entity @Table
 public class Cliente implements Serializable {
 
     @Id
