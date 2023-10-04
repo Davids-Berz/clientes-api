@@ -27,7 +27,7 @@ public class ClienteService implements IClienteService {
     @Override
     @Transactional(readOnly = true)
     public Cliente findById(Long id) {
-        return clienteDao.findById(id).orElse(null);
+        return clienteDao.findById(id).orElseThrow();
     }
 
     @Override
