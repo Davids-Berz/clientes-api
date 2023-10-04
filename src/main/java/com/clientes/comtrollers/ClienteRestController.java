@@ -52,19 +52,46 @@ public class ClienteRestController {
 
     @PostMapping("/clientes")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente create(@RequestBody Cliente cliente) {
-        return clienteService.save(cliente);
+    public ResponseEntity<?> create(@RequestBody Cliente cliente) {
+        Map<String, Object> response = new HashMap<>();
+        Cliente nuevoCliente = null;
+
+        try {
+            nuevoCliente = clienteService.save(cliente);
+        }catch (DataAccessException e) {
+            response.put("mensaje", "Error al insertar en la base de datos: " + e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        response.put("mensaje", "El cliente se ah Creado con Exito");
+        response.put("cliente", nuevoCliente);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/clientes/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente update(@RequestBody Cliente cliente, @PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable Long id) {
+        Map<String, Object> response = new HashMap<>();
+        Cliente clienteUpdated = null;
         Cliente clienteActual = clienteService.findById(id);
-        clienteActual.setNombre(cliente.getNombre());
-        clienteActual.setApellido(cliente.getApellido());
-        clienteActual.setEmail(cliente.getEmail());
 
-        return clienteService.save(clienteActual);
+        if (clienteActual == null) {
+            response.put("mensaje", "Error, no se pudo editar");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+        try {
+            clienteActual.setNombre(cliente.getNombre());
+            clienteActual.setApellido(cliente.getApellido());
+            clienteActual.setEmail(cliente.getEmail());
+            clienteActual.setCreateAt(cliente.getCreateAt());
+            clienteUpdated = clienteService.save(clienteActual);
+        }catch (DataAccessException e) {
+            response.put("mensaje", "Error al actualizar en la base de datos: " + e.getMostSpecificCause().getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.put("mensaje", "Cliente actualizado con exito!");
+        response.put("cliente", clienteUpdated);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/clientes/{id}")
