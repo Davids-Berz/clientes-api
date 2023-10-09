@@ -2,15 +2,18 @@ package com.clientes.comtrollers;
 
 import com.clientes.models.entity.Cliente;
 import com.clientes.models.services.IClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -52,9 +55,11 @@ public class ClienteRestController {
 
     @PostMapping("/clientes")
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> create(@RequestBody Cliente cliente) {
+    public ResponseEntity<?> create(@Valid @RequestBody Cliente cliente, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
         Cliente nuevoCliente = null;
+
+        if (hasErrors(result, response)) return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
         try {
             nuevoCliente = clienteService.save(cliente);
@@ -69,10 +74,12 @@ public class ClienteRestController {
     }
 
     @PutMapping("/clientes/{id}")
-    public ResponseEntity<?> update(@RequestBody Cliente cliente, @PathVariable Long id) {
+    public ResponseEntity<?> update(@Valid @RequestBody Cliente cliente, BindingResult result,@PathVariable Long id) {
         Map<String, Object> response = new HashMap<>();
         Cliente clienteUpdated = null;
         Cliente clienteActual = clienteService.findById(id);
+
+        if (hasErrors(result, response)) return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
         if (clienteActual == null) {
             response.put("mensaje", "Error, no se pudo editar");
@@ -108,6 +115,18 @@ public class ClienteRestController {
         }
         response.put("mensaje", "cliente eliminado con exito!");
         return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+    }
+
+    private boolean hasErrors(BindingResult result, Map<String, Object> response) {
+        if (result.hasErrors()) {
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(e -> "El campo " + e.getField() + " " + e.getDefaultMessage())
+                    .collect(Collectors.toList());
+            response.put("error", errors);
+            return true;
+        }
+        return false;
     }
 
 }
